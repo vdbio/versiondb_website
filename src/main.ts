@@ -3,6 +3,7 @@ import 'flyonui/flyonui'
 import hljs from 'highlight.js/lib/core';
 import json from 'highlight.js/lib/languages/json';
 import 'highlight.js/styles/stackoverflow-light.css';
+import 'devicon/devicon.min.css';
 
 hljs.registerLanguage('json', json);
 
