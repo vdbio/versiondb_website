@@ -2,7 +2,7 @@ import './style.css'
 import 'flyonui/flyonui'
 import hljs from 'highlight.js/lib/core'
 import json from 'highlight.js/lib/languages/json'
-import 'highlight.js/styles/stackoverflow-light.css'
+import 'highlight.js/styles/atom-one-dark.css'
 import 'devicon/devicon.min.css'
 
 const TEXT_DURATION = 4000
@@ -29,33 +29,24 @@ document.addEventListener('DOMContentLoaded', () => {
 const sections = document.querySelectorAll('section')
 const navLinks = document.querySelectorAll('.nav-link')
 
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    const id = entry.target.getAttribute('id')
-    if (!id) {
-      return null
-    }
+window.addEventListener('scroll', () => {
+  let current = ''
 
-    const link = Array.from(navLinks).find((l) => l.getAttribute('href') === `#${id}`)
-    if (!link) {
-      return null
-    }
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 80 // Adjust for fixed navbar height
 
-    if (entry.isIntersecting) {
-      // remove active class from all nav links
-      navLinks.forEach(l => l.classList.remove('text-primary'))
-      // add active class to the currently visible section's link
+    if (scrollY >= sectionTop) {
+      current = section.getAttribute('id') || ''
+    }
+  })
+
+  navLinks.forEach(link => {
+    link.classList.remove('text-primary')
+    if (link.getAttribute('href') === '#' + current) {
       link.classList.add('text-primary')
     }
   })
-}, {
-  root: null,
-  rootMargin: '-0px 0px 0px 0px',
-  threshold: INTERSECTION_THRESHOLD // trigger when at least 10% is visible
 })
-
-// observe all sections
-sections.forEach(section => sectionObserver.observe(section))
 
 let isCounterRan = false
 
