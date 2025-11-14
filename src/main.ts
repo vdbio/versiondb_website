@@ -10,13 +10,15 @@ const INTERSECTION_THRESHOLD = 0.10
 
 hljs.registerLanguage('json', json)
 
+const truncateNumber = (count: number, truncateVal: number) => Math.floor((count / truncateVal) * 10) / 10
+
 const formatNumber = (count: number) => {
   if (count >= 1_000_000) {
-    return (count / 1_000_000).toFixed(1) + 'M'
+    return truncateNumber(count, 1_000_000) + 'M';
   }
 
   if (count >= 1_000) {
-    return (count / 1_000).toFixed(1) + 'k'
+    return truncateNumber(count, 1_000) + 'k'
   }
 
   return Math.floor(count).toString()
